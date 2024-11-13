@@ -22,7 +22,7 @@ public class CustomizedExceptionHandler extends BaseComponent {
 		logger.error("Unexpected exception occurred.", ex);
 		return new ResponseEntity<>(
 				ApiResponse.builder()
-						   .data(getApiError(ex, HttpStatus.INTERNAL_SERVER_ERROR, request))
+						   .apiError(getApiError(ex, HttpStatus.INTERNAL_SERVER_ERROR, request))
 						   .build()
 				, HttpStatus.INTERNAL_SERVER_ERROR
 		);
@@ -33,7 +33,7 @@ public class CustomizedExceptionHandler extends BaseComponent {
 																   final WebRequest request) {
 		logger.error("Reference to a non-existing object.", ex);
 		return new ResponseEntity<>(
-				ApiResponse.builder().data(getApiError(ex, HttpStatus.NOT_FOUND, request)).build(),
+				ApiResponse.builder().apiError(getApiError(ex, HttpStatus.NOT_FOUND, request)).build(),
 				HttpStatus.NOT_FOUND
 		);
 	}
@@ -44,7 +44,7 @@ public class CustomizedExceptionHandler extends BaseComponent {
 		logger.error("There was a parameter missing from incoming request.", ex);
 		return new ResponseEntity<>(
 				ApiResponse.builder()
-						   .data(getApiError(ex, HttpStatus.BAD_REQUEST, request))
+						   .apiError(getApiError(ex, HttpStatus.BAD_REQUEST, request))
 						   .build()
 				, HttpStatus.BAD_REQUEST
 		);
@@ -56,7 +56,7 @@ public class CustomizedExceptionHandler extends BaseComponent {
 		logger.error("Method argument is invalid.", ex);
 		return new ResponseEntity<>(
 				ApiResponse.builder()
-						   .data(getApiError(ex, HttpStatus.BAD_REQUEST, request))
+						   .apiError(getApiError(ex, HttpStatus.BAD_REQUEST, request))
 						   .build()
 				, HttpStatus.BAD_REQUEST
 		);
@@ -67,7 +67,7 @@ public class CustomizedExceptionHandler extends BaseComponent {
 																		   final WebRequest request) {
 		logger.error("Method argument, although matched, is of wrong type.", ex);
 		return new ResponseEntity<>(
-				ApiResponse.builder().data(getApiError(ex, HttpStatus.BAD_REQUEST, request)).build(),
+				ApiResponse.builder().apiError(getApiError(ex, HttpStatus.BAD_REQUEST, request)).build(),
 				HttpStatus.BAD_REQUEST
 		);
 	}

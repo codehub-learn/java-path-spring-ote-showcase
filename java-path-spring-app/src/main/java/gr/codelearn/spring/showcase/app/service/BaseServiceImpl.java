@@ -3,33 +3,36 @@ package gr.codelearn.spring.showcase.app.service;
 import gr.codelearn.spring.showcase.app.base.BaseComponent;
 import gr.codelearn.spring.showcase.app.model.BaseModel;
 import gr.codelearn.spring.showcase.app.repository.BaseRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T, Long> {
-	protected abstract BaseRepository<T, Long> getRepository();
+	protected abstract JpaRepository<T, Long> getRepository();
 
 	@Override
 	public T create(final T item) {
-		return getRepository().create(item);
+		logger.trace("Creating {}.", item);
+		return getRepository().save(item);
 	}
 
+	@SafeVarargs
 	@Override
-	public List<T> createAll(final T... items) {
+	public final List<T> createAll(final T... items) {
 		return createAll(Arrays.asList(items));
 	}
 
 	@Override
 	public List<T> createAll(final List<T> items) {
-		return getRepository().createAll(items);
+		return getRepository().saveAll(items);
 	}
 
 	@Override
 	public void update(final T item) {
-		getRepository().update(item);
-
+		logger.trace("Updating {}.", item);
+		getRepository().save(item);
 	}
 
 	@Override
@@ -44,19 +47,20 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
 	@Override
 	public T get(final Long id) {
-		if (getRepository().get(id) == null) {
-			throw new NoSuchElementException(String.format("Resource with id [%d] not found", id));
-		}
-		return getRepository().get(id);
+		T item = getRepository().findById(id).orElseThrow();
+		logger.trace("Item found matching id:{}.", id);
+		return item;
 	}
 
 	@Override
 	public boolean exists(final T item) {
-		return getRepository().exists(item);
+		logger.trace("Checking whether {} exists.", item);
+		return getRepository().existsById(item.getId());
 	}
 
 	@Override
 	public List<T> findAll() {
+		logger.trace("Retrieving all items.");
 		return getRepository().findAll();
 	}
 

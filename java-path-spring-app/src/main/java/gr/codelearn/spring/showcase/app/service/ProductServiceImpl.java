@@ -4,7 +4,9 @@ import gr.codelearn.spring.showcase.app.model.Product;
 import gr.codelearn.spring.showcase.app.repository.BaseRepository;
 import gr.codelearn.spring.showcase.app.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,7 +15,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 	private final CategoryService categoryService;
 
 	@Override
-	protected BaseRepository<Product, Long> getRepository() {
+	protected JpaRepository<Product, Long> getRepository() {
 		return productRepository;
 	}
 
@@ -23,9 +25,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 	}
 
 	@Override
+	@Transactional
 	public Product create(final Product product, final Long categoryId) {
 		var category = categoryService.get(categoryId);
 		product.setCategory(category);
-		return productRepository.create(product);
+		return productRepository.save(product);
 	}
 }

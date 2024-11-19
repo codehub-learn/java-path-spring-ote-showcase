@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Profile("generate-orders")
 @DependsOn("catalogCustomerSampleContentCreator")
 @RequiredArgsConstructor
+@org.springframework.core.annotation.Order(2)
 public class OrderSampleContentCreator extends BaseComponent implements CommandLineRunner {
 	private final CustomerService customerService;
 	private final OrderService orderService;

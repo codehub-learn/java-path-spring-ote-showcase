@@ -11,6 +11,7 @@ import gr.codelearn.spring.showcase.app.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.util.List;
 @Component
 @Profile("generate-catalog-customers")
 @RequiredArgsConstructor
+@Order(1)
 public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
 	private final ProductService productService;
 	private final CategoryService categoryService;

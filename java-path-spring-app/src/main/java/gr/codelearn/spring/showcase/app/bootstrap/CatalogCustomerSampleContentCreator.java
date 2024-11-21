@@ -29,33 +29,45 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
 
 	@Override
 	public void run(String... args) throws Exception {
-		Category newCategory = categoryService.create(Category.builder().description("Mobile Phones").build());
-		logger.info("Created {}.", newCategory);
+		Category mobilePhone = categoryService.create(Category.builder().description("Mobile Phones").build());
+		Category tv = categoryService.create(Category.builder().description("TVs").build());
+		logger.info("Created {}.", mobilePhone);
 
 		List<Product> products = List.of(
 				Product.builder().serial("SN1000-0001").name("Apple iPhone 12 Pro 5G 512GB")
-					   .price(BigDecimal.valueOf(1629)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(1629)).category(mobilePhone).build(),
 				Product.builder().serial("SN1000-0002").name("Apple iPhone 12 Pro Max 5G 512GB")
-					   .price(BigDecimal.valueOf(1749)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(1749)).category(mobilePhone).build(),
 				Product.builder().serial("SN1100-0001").name("Samsung Galaxy S21 Ultra")
-					   .price(BigDecimal.valueOf(1479.99)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(1479.99)).category(mobilePhone).build(),
 				Product.builder().serial("SN1100-0002").name("Samsung Galaxy S20 Ultra")
-					   .price(BigDecimal.valueOf(1199)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(1199)).category(mobilePhone).build(),
 				Product.builder().serial("SN1200-0001").name("Huawei P40 Pro")
-					   .price(BigDecimal.valueOf(899.49)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(899.49)).category(mobilePhone).build(),
 				Product.builder().serial("SN1300-0001").name("Xiaomi Redmi 9A")
-					   .price(BigDecimal.valueOf(199.75)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(199.75)).category(mobilePhone).build(),
 				Product.builder().serial("SN1400-0001").name("RealMe C11")
-					   .price(BigDecimal.valueOf(129)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(129)).category(mobilePhone).build(),
 				Product.builder().serial("SN1500-0001").name("Honor 10 Lite")
-					   .price(BigDecimal.valueOf(179)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(179)).category(mobilePhone).build(),
 				Product.builder().serial("SN1000-0003").name("Apple iPhone 12 Pro Max 5G 128GB")
-					   .price(BigDecimal.valueOf(1339)).category(newCategory).build(),
+					   .price(BigDecimal.valueOf(1339)).category(mobilePhone).build(),
 				Product.builder().serial("SN1000-0004").name("Apple iPhone 11 Pro 256GB")
-					   .price(BigDecimal.valueOf(1299.99)).category(newCategory).build());
+					   .price(BigDecimal.valueOf(1299.99)).category(mobilePhone).build(),
+				Product.builder().serial("SN2000-0001").name("Samsung TV")
+					   .price(BigDecimal.valueOf(400.00)).category(tv).build(),
+				Product.builder().serial("SN2000-0002").name("Sony TV")
+					   .price(BigDecimal.valueOf(500.00)).category(tv).build(),
+				Product.builder().serial("SN2000-0003").name("LG TV")
+					   .price(BigDecimal.valueOf(600)).category(tv).build());
 
 		var productsCreated = productService.createAll(products);
+
+		var product = productService.getWithCategory(1L);
+		logger.info("{}", product.getCategory().getDescription());
+
 		logger.info("Created {} products.", productsCreated.size());
+
 		productsCreated.stream()
 					   .sorted(Comparator.comparing(Product::getId))
 					   .forEach(p -> logger.debug("{}. {}", p.getId(), p));

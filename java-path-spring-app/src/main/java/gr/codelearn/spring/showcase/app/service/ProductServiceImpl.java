@@ -19,6 +19,11 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 	}
 
 	@Override
+	public Product getWithCategory(final Long id) {
+		return productRepository.getWithCategory(id);
+	}
+
+	@Override
 	public Product findBySerial(final String serial) {
 		return productRepository.findBySerial(serial);
 	}

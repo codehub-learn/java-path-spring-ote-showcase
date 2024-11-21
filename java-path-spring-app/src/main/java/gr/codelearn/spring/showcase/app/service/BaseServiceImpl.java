@@ -2,12 +2,10 @@ package gr.codelearn.spring.showcase.app.service;
 
 import gr.codelearn.spring.showcase.app.base.BaseComponent;
 import gr.codelearn.spring.showcase.app.model.BaseModel;
-import gr.codelearn.spring.showcase.app.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T, Long> {
 	protected abstract JpaRepository<T, Long> getRepository();
